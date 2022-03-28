@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class TelaDoisActivity extends AppCompatActivity {
     EditText edt_nome;
     Button btn_voltar;
     Intent intent;
+    String str;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +24,19 @@ public class TelaDoisActivity extends AppCompatActivity {
         btn_voltar = findViewById(R.id.btn_voltar);
 
         intent = getIntent();
-        System.out.println(intent.getExtras().getString("keyNome"));
+        str = intent.getExtras().getString("keyNome");
 
         btn_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                finish();
+                if (edt_nome.getText().toString().isEmpty()){
+                    Toast.makeText(TelaDoisActivity.this, "Digite um nome", Toast.LENGTH_LONG).show();
+                }else{
+                    str = edt_nome.getText().toString();
+                    intent.putExtra("kNome", str);
+                    setResult(1, intent);
+                    finish();
+                }
             }
         });
 
